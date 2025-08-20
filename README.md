@@ -7,7 +7,8 @@ This project is part of a tutorial series where we build a complete **page build
 
 ## 🎥 YouTube Tutorial (Part 1)
 Watch the full video tutorial here:  
-👉 [How to build: Drag and Drop Page Builder Vanilla JavaScript (Part 1)]([https://www.youtube.com/watch?v=](https://youtu.be/p417efFHaLE))
+👉 [How to build: Drag and Drop Page Builder Vanilla JavaScript (Part 1)](https://youtu.be/p417efFHaLE)
+
 
 ---
 
