@@ -1,0 +1,61 @@
+/* ====== Global Reset & Base Styles ====== */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 16px;
+}
+
+body {
+  background-color: #fafafa;
+  color: #333;
+  line-height: 1.5;
+}
+
+/* ====== Buttons ====== */
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+button:focus {
+  outline: 2px solid #f1c40f;
+  outline-offset: 2px;
+}
+
+/* ====== Form Fields ====== */
+input,
+textarea,
+select {
+  outline: none;
+  border: 1px solid #ccc;
+  padding: 8px 10px;
+  font-size: 1rem;
+  border-radius: 6px;
+  background-color: white;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: #f1c40f;
+  box-shadow: 0 0 0 2px rgba(241, 196, 15, 0.2);
+}
+
+/* ====== Images ====== */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}

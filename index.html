@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stone UI: Drag & Dorp page builder</title>
+    <link rel="stylesheet" href="./styles/reset.css" />
+    <link rel="stylesheet" href="./styles/styles.css" />
+    <link rel="stylesheet" href="./styles/builder.css" />
+    <link rel="stylesheet" href="./styles/dynamic-css.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/iconoir-icons/iconoir@main/css/iconoir.css?_cacheOverride=1754904705882"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <aside class="sidebar">
+        <a href="./preview.html" target="_blank" class="preview">Preview</a>
+
+        <div class="components">
+          <h4>Component: Drag & Drop builder</h4>
+          <div id="components-list">
+            <div data-cmp-type="text" draggable="true">
+              <i class="iconoir-text"></i>Text
+            </div>
+            <div data-cmp-type="img" draggable="true">
+              <i class="iconoir-media-image"></i>Image
+            </div>
+            <div data-cmp-type="button" draggable="true">
+              <i class="iconoir-arrow-reduce-tag"></i>Button
+            </div>
+            <div data-cmp-type="form:text" draggable="true">
+              <i class="iconoir-input-field"></i>Form: Text
+            </div>
+          </div>
+        </div>
+
+        <div class="options">
+          <button
+            class="components-list iconoir-component"
+            title="Open Components List"
+          ></button>
+          <button
+            class="save-page iconoir-database-backup"
+            title="Save"
+          ></button>
+        </div>
+      </aside>
+
+      <div class="builder">
+        <header class="header">Header</header>
+        <main class="main">
+          <!-- this will be remvoed after adding 1st section -->
+          <div class="placeholder-section">
+            <h3>Start by adding section</h3>
+            <button class="welcome-btn">Add Section</button>
+          </div>
+          <!-- this is used for section and drop components in it-->
+          <!-- <div data-target-type="section" class="section-min-height">
+            <button class="add-section top" title="Add Section - Top">
+              Add Section - Top
+            </button>
+            <button class="add-section bottom" title="Add Section - Bottom">
+              Add Section - Bottom
+            </button>
+            <div data-target="section" class="drop-section"></div>
+            <div class="options options--section">
+              <button
+                class="settings iconoir-settings"
+                title="Settings"
+              ></button>
+              <button class="delete iconoir-trash" title="Delete"></button>
+              <button class="move-up iconoir-arrow-up" title="Move Up"></button>
+              <button
+                class="move-down iconoir-arrow-down"
+                title="Move Down"
+              ></button>
+              <button class="duplicate iconoir-copy" title="Duplicate"></button>
+            </div>
+          </div> -->
+        </main>
+        <footer class="footer">Footer</footer>
+      </div>
+    </div>
+    <script type="module" src="./index.js"></script>
+  </body>
+</html>
