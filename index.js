@@ -36,3 +36,42 @@ document.addEventListener('click', (event) => {
     console.log('duplicate');
   }
 });
+
+document.body.addEventListener('dragover', (event) => {
+  const targetSection = event.target.closest('[data-target-type="section"]');
+  if (!targetSection) return;
+  const targetDropzone = targetSection.querySelector('[data-target="section"]');
+  if (!targetDropzone) return;
+  event.preventDefault();
+  event.target.classList.add('drag-over');
+});
+document.body.addEventListener('dragleave', (event) => {
+  const targetSection = event.target.closest('[data-target-type="section"]');
+  if (!targetSection) return;
+  const targetDropzone = targetSection.querySelector('[data-target="section"]');
+  if (!targetDropzone) return;
+  event.target.classList.remove('drag-over');
+});
+document.body.addEventListener('drop', (event) => {
+  const targetSection = event.target.closest('[data-target-type="section"]');
+  if (!targetSection) return;
+  const targetDropzone = targetSection.querySelector('[data-target="section"]');
+  if (!targetDropzone) return;
+  event.target.classList.remove('drag-over');
+
+  event.preventDefault();
+  const cmpType = event.dataTransfer.getData('text/plain');
+  console.log('cmpType', cmpType);
+  const componentUI = window.getComponentUI(cmpType);
+  if (componentUI) {
+    targetDropzone.appendChild(componentUI);
+  }
+});
+document.body.addEventListener('dragstart', (event) => {
+  const draggable = event.target.closest('#components-list [draggable="true"]');
+  if (!draggable) return;
+  const cmpType = draggable.getAttribute('data-cmp-type');
+  console.log('cmpType', cmpType);
+  event.dataTransfer.setData('text/plain', cmpType);
+});
+document.body.addEventListener('dragend', (event) => {});
