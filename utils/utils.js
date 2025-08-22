@@ -98,3 +98,130 @@ function getComponentUI(cmpType) {
 }
 
 window.getComponentUI = getComponentUI;
+
+function getDynamicCssFormUI() {
+  const formUI = `<form class="style-form">
+          <!-- Font Size -->
+          <div class="form-group">
+            <label for="font-size">Font Size (px)</label>
+            <input
+              type="number"
+              id="font-size"
+              name="font-size"
+              min="1"
+              placeholder="e.g. 16"
+            />
+          </div>
+
+          <!-- Font Color -->
+          <div class="form-group">
+            <label for="font-color">Font Color</label>
+            <input type="color" id="font-color" name="font-color" />
+          </div>
+
+          <!-- Width & Height -->
+          <div class="form-group">
+            <label for="width">Width (px)</label>
+            <input
+              type="number"
+              id="width"
+              name="width"
+              min="0"
+              placeholder="e.g. 200"
+            />
+          </div>
+          <div class="form-group">
+            <label for="height">Height (px)</label>
+            <input
+              type="number"
+              id="height"
+              name="height"
+              min="0"
+              placeholder="e.g. 50"
+            />
+          </div>
+
+          <!-- Background Color & Button Text -->
+          <div class="form-group">
+            <label for="background-color">Background Color</label>
+            <input type="color" id="background-color" name="background-color" />
+          </div>
+          <div class="form-group">
+            <label for="button-text">Button Text</label>
+            <input
+              type="text"
+              id="button-text"
+              name="button-text"
+              placeholder="Enter button text"
+            />
+          </div>
+
+          <!-- Padding, Border Radius & Placeholder Text -->
+          <div class="form-group">
+            <label for="padding">Padding (px)</label>
+            <input
+              type="number"
+              id="padding"
+              name="padding"
+              min="0"
+              placeholder="e.g. 10"
+            />
+          </div>
+          <div class="form-group">
+            <label for="border-radius">Border Radius (px)</label>
+            <input
+              type="number"
+              id="border-radius"
+              name="border-radius"
+              min="0"
+              placeholder="e.g. 5"
+            />
+          </div>
+          <div class="form-group">
+            <label for="placeholder-text">Placeholder Text</label>
+            <input
+              type="text"
+              id="placeholder-text"
+              name="placeholder-text"
+              placeholder="Enter placeholder text"
+            />
+          </div>
+          <button class="apply-css">Apply CSS</button>
+        </form>`;
+
+  return window.getHTMLFromString(formUI);
+}
+
+window.getDynamicCssFormUI = getDynamicCssFormUI;
+
+function getComponentsListUI() {
+  const componentsList = `<div class="components">
+          <h4>Component: Drag & Drop builder</h4>
+          <div id="components-list">
+            <div data-cmp-type="text" draggable="true">
+              <i class="iconoir-text"></i>Text
+            </div>
+            <div data-cmp-type="img" draggable="true">
+              <i class="iconoir-media-image"></i>Image
+            </div>
+            <div data-cmp-type="btn" draggable="true">
+              <i class="iconoir-arrow-reduce-tag"></i>Button
+            </div>
+            <div data-cmp-type="form:text" draggable="true">
+              <i class="iconoir-input-field"></i>Form: Text
+            </div>
+          </div>
+        </div>`;
+  return window.getHTMLFromString(componentsList);
+}
+
+window.getComponentsListUI = getComponentsListUI;
+
+function getPlaceholderUI() {
+  const placeholder = `<div class="placeholder-section">
+            <h3>Start by adding section</h3>
+            <button class="welcome-btn">Add Section</button>
+          </div>`;
+  return window.getHTMLFromString(placeholder);
+}
+window.getPlaceholderUI = getPlaceholderUI;

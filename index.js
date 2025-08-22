@@ -20,20 +20,90 @@ document.addEventListener('click', (event) => {
       event.target.parentElement.insertAdjacentElement('afterend', newSection);
     }
   }
+  if (event.target.classList.contains('components-list')) {
+    const styleFormUI = document.querySelector('.style-form');
+    if (styleFormUI) {
+      styleFormUI.remove();
+    }
+    const prevBtn = document.querySelector('.sidebar .preview');
+    if (prevBtn) {
+      const compoentsList = document.querySelector('.components');
+      if (compoentsList) {
+        compoentsList.remove();
+      }
+      prevBtn.after(window.getComponentsListUI());
+    }
+  }
   if (event.target.classList.contains('settings')) {
     console.log('settings');
+    const componentsList = document.querySelector('.components');
+    if (componentsList) {
+      componentsList.remove();
+    }
+
+    const prevBtn = document.querySelector('.sidebar .preview');
+    if (prevBtn) {
+      const styleFormUI = document.querySelector('.style-form');
+      if (styleFormUI) {
+        styleFormUI.remove();
+      }
+      prevBtn.after(window.getDynamicCssFormUI());
+    }
   }
   if (event.target.classList.contains('delete')) {
     console.log('delete');
+    const closesetTarget = event.target.closest('[data-target-type]');
+    const targetType = closesetTarget.getAttribute('data-target-type');
+    if (closesetTarget) {
+      closesetTarget.remove();
+    }
+    if (targetType !== 'section') return;
+    const sectionsList = document.querySelectorAll(
+      '[data-target-type="section"]'
+    );
+    console.log('sectionsList', sectionsList);
+
+    if (!sectionsList.length) {
+      const main = document.querySelector('.main');
+      if (main) {
+        main.innerHTML = '';
+        main.appendChild(window.getPlaceholderUI());
+      }
+    }
   }
   if (event.target.classList.contains('move-up')) {
     console.log('move-up');
+    const closesetTarget = event.target.closest('[data-target-type]');
+    console.log('closesetTarget', closesetTarget);
+
+    if (closesetTarget) {
+      const prevEle = closesetTarget.previousElementSibling;
+      if (prevEle) {
+        closesetTarget.parentNode.insertBefore(closesetTarget, prevEle);
+      }
+    }
   }
   if (event.target.classList.contains('move-down')) {
     console.log('move-down');
+    const closesetTarget = event.target.closest('[data-target-type]');
+    console.log('closesetTarget', closesetTarget);
+
+    if (closesetTarget) {
+      const nextEle = closesetTarget.nextElementSibling;
+      if (nextEle) {
+        closesetTarget.parentNode.insertBefore(nextEle, closesetTarget);
+      }
+    }
   }
   if (event.target.classList.contains('duplicate')) {
     console.log('duplicate');
+    const closesetTarget = event.target.closest('[data-target-type]');
+    if (closesetTarget) {
+      const clone = closesetTarget.cloneNode(true);
+      if (clone) {
+        closesetTarget.insertAdjacentElement('afterend', clone);
+      }
+    }
   }
 });
 
