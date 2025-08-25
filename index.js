@@ -1,4 +1,5 @@
 import './utils/utils.js';
+import './utils/styles.js';
 document.addEventListener('click', (event) => {
   if (event.target.classList.contains('welcome-btn')) {
     console.log('welcome btn');
@@ -34,6 +35,10 @@ document.addEventListener('click', (event) => {
       prevBtn.after(window.getComponentsListUI());
     }
   }
+  const closesetTarget = event.target.closest('[data-target-type]');
+  if (!closesetTarget) return;
+  const targetType = closesetTarget.getAttribute('data-target-type');
+  const targetEle = closesetTarget.querySelector('[data-target]');
   if (event.target.classList.contains('settings')) {
     console.log('settings');
     const componentsList = document.querySelector('.components');
@@ -48,12 +53,14 @@ document.addEventListener('click', (event) => {
         styleFormUI.remove();
       }
       prevBtn.after(window.getDynamicCssFormUI());
+      window.initColorChangeTracking('.style-form');
     }
+
+    window.livePreview('.style-form', targetEle, targetType);
   }
   if (event.target.classList.contains('delete')) {
     console.log('delete');
-    const closesetTarget = event.target.closest('[data-target-type]');
-    const targetType = closesetTarget.getAttribute('data-target-type');
+
     if (closesetTarget) {
       closesetTarget.remove();
     }

@@ -225,3 +225,15 @@ function getPlaceholderUI() {
   return window.getHTMLFromString(placeholder);
 }
 window.getPlaceholderUI = getPlaceholderUI;
+
+function initColorChangeTracking(formSelector) {
+  const form = document.querySelector(formSelector);
+  if (!form) return;
+  form.querySelectorAll('input[type=color]').forEach((input) => {
+    input.dataset.changed = 'false';
+    input.addEventListener('input', () => {
+      input.dataset.changed = 'true';
+    });
+  });
+}
+window.initColorChangeTracking = initColorChangeTracking;
