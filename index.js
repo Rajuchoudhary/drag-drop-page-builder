@@ -55,7 +55,7 @@ document.addEventListener('click', (event) => {
       prevBtn.after(window.getDynamicCssFormUI());
       window.initColorChangeTracking('.style-form');
     }
-
+    window.loadExistingStyles(targetEle);
     window.livePreview('.style-form', targetEle, targetType);
   }
   if (event.target.classList.contains('delete')) {

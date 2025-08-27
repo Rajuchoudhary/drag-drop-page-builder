@@ -12,6 +12,7 @@ Watch the full video tutorial here:
 👉 [How to build: Drag and Drop Page Builder Vanilla JavaScript (Part 2)](https://youtu.be/mKs6zCiLybo)
 👉 [How to build: Drag and DXrop Page Builder Vanilla JavaScript (Part 3)](https://youtu.be/B1-GnL16AM0)
 👉 [How to build: Drag and DXrop Page Builder Vanilla JavaScript (Part 4)](https://youtu.be/-565iERV3fo)
+👉 [How to build: Drag and DXrop Page Builder Vanilla JavaScript (Part 5)](https://youtu.be/hbCQo9bIugg)
 
 ---
 
@@ -21,3 +22,4 @@ Watch the full video tutorial here:
 - [x] Drag and drop functionality
 - [x] Duplicate, delete, and move sections
 - [x] Custom UI styling
+- [x] Custom UI styling: bug fix

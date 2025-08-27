@@ -2,22 +2,36 @@ function generateClassName() {
   const uniqueClassName = Math.random().toString(36).slice(2, 10);
   return `dynamic-${uniqueClassName}`;
 }
+
+function getDynamicClassName(targetEle) {
+  if (!targetEle || !targetEle.classList) return null;
+  return (
+    Array.from(targetEle.classList).find((cls) => cls.startsWith('dynamic-')) ||
+    null
+  );
+}
+
 window.generateClassName = generateClassName;
 function livePreview(formSelector, targetEle, targetType) {
   const form = document.querySelector(formSelector);
   if (!form) return;
   if (!targetEle) return;
   // generate class name add to targetEle
-  let className = window.generateClassName();
-  targetEle.classList.add(className);
+  let className = getDynamicClassName(targetEle);
+  if (!className) {
+    className = window.generateClassName();
+    targetEle.classList.add(className);
+  }
 
   const classSelector = `.${className}`;
   const styleTagId = 'stone-ui-dynamic-styles';
   let styleTag = document.getElementById(styleTagId);
-
-  styleTag = document.createElement('style');
-  styleTag.id = styleTagId;
-  document.head.appendChild(styleTag);
+  if (!styleTag) {
+    styleTag = document.getElementById(styleTagId);
+    styleTag = document.createElement('style');
+    styleTag.id = styleTagId;
+    document.head.appendChild(styleTag);
+  }
 
   form.addEventListener('input', (e) => {
     const styles = getDynamicStyles(formSelector);
@@ -49,11 +63,11 @@ function getDynamicStyles(formSelector) {
   }
   const width = form.querySelector('#width')?.value;
   if (width) {
-    styles['font-size'] = `${width}px`;
+    styles['width'] = `${width}px`;
   }
   const height = form.querySelector('#height')?.value;
   if (height) {
-    styles['font-size'] = `${height}px`;
+    styles['height'] = `${height}px`;
   }
   const backgroundEle = form.querySelector('#background-color');
   if (backgroundEle && backgroundEle.dataset.changed === 'true') {
@@ -65,9 +79,69 @@ function getDynamicStyles(formSelector) {
   }
   const borderRadius = form.querySelector('#border-radius')?.value;
   if (borderRadius) {
-    styles['border-radius'] = `${borderRadius}`;
+    styles['border-radius'] = `${borderRadius}px`;
   }
   return styles;
 }
 
 window.getDynamicStyles = getDynamicStyles;
+
+function loadExistingStyles(targetEle) {
+  const className = getDynamicClassName(targetEle);
+  if (!className) return;
+
+  const styleTag = document.getElementById('stone-ui-dynamic-styles');
+  if (!styleTag) return;
+
+  const cssContent = styleTag.textContent;
+  const regex = new RegExp(`\\.${className}\\s*\\{([^}]*)\\}`, 'i');
+  const match = cssContent.match(regex);
+  if (match && match[1]) {
+    const cssRules = match[1]
+      .split(';')
+      .map((r) => r.trim())
+      .filter(Boolean);
+    const styleMap = {};
+    cssRules.forEach((rule) => {
+      const [prop, value] = rule.split(':');
+      styleMap[prop] = `${value}`.trim();
+    });
+    console.log('styleMap', styleMap);
+
+    const form = document.querySelector('.style-form');
+    if (form) {
+      if (form.querySelector('#font-size')) {
+        form.querySelector('#font-size').value = parseInt(
+          styleMap['font-size'] || ''
+        );
+      }
+      if (form.querySelector('#font-color')) {
+        form.querySelector('#font-color').value = styleMap['color'] || '';
+      }
+      if (form.querySelector('#width')) {
+        form.querySelector('#width').value = parseInt(styleMap['width'] || '');
+      }
+      if (form.querySelector('#height')) {
+        form.querySelector('#height').value = parseInt(
+          styleMap['height'] || ''
+        );
+      }
+      if (form.querySelector('#background-color')) {
+        form.querySelector('#background-color').value =
+          styleMap['background-color'] || '';
+      }
+      if (form.querySelector('#padding')) {
+        form.querySelector('#padding').value = parseInt(
+          styleMap['padding'] || ''
+        );
+      }
+      if (form.querySelector('#border-radius')) {
+        form.querySelector('#border-radius').value = parseInt(
+          styleMap['border-radius'] || ''
+        );
+      }
+    }
+  }
+}
+
+window.loadExistingStyles = loadExistingStyles;
