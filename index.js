@@ -52,7 +52,7 @@ document.addEventListener('click', (event) => {
       if (styleFormUI) {
         styleFormUI.remove();
       }
-      prevBtn.after(window.getDynamicCssFormUI());
+      prevBtn.after(window.getDynamicCssFormUI(targetType));
       window.initColorChangeTracking('.style-form');
     }
     window.loadExistingStyles(targetEle);

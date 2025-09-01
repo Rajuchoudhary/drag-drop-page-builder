@@ -99,10 +99,9 @@ function getComponentUI(cmpType) {
 
 window.getComponentUI = getComponentUI;
 
-function getDynamicCssFormUI() {
-  const formUI = `<form class="style-form">
-          <!-- Font Size -->
-          <div class="form-group">
+function getDynamicCssFormUI(targetType) {
+  const formElements = {
+    fontSize: `<div class="form-group">
             <label for="font-size">Font Size (px)</label>
             <input
               type="number"
@@ -111,16 +110,12 @@ function getDynamicCssFormUI() {
               min="1"
               placeholder="e.g. 16"
             />
-          </div>
-
-          <!-- Font Color -->
-          <div class="form-group">
+          </div>`,
+    fontColor: `<div class="form-group">
             <label for="font-color">Font Color</label>
             <input type="color" id="font-color" name="font-color" />
-          </div>
-
-          <!-- Width & Height -->
-          <div class="form-group">
+          </div>`,
+    width: `<div class="form-group">
             <label for="width">Width (px)</label>
             <input
               type="number"
@@ -129,7 +124,8 @@ function getDynamicCssFormUI() {
               min="0"
               placeholder="e.g. 200"
             />
-          </div>
+          </div>`,
+    height: `<div class="form-group">           
           <div class="form-group">
             <label for="height">Height (px)</label>
             <input
@@ -139,14 +135,21 @@ function getDynamicCssFormUI() {
               min="0"
               placeholder="e.g. 50"
             />
-          </div>
-
-          <!-- Background Color & Button Text -->
-          <div class="form-group">
+          </div>`,
+    img: `<div class="form-group">
+              <label for="img-url">Image URL</label>
+              <input
+                type="url"
+                id="img-url"
+                name="img-url"
+                placeholder="https://example.com/image.jpg"
+              />
+            </div>`,
+    backgroundColor: `<div class="form-group">
             <label for="background-color">Background Color</label>
             <input type="color" id="background-color" name="background-color" />
-          </div>
-          <div class="form-group">
+          </div>`,
+    btnText: `<div class="form-group">
             <label for="button-text">Button Text</label>
             <input
               type="text"
@@ -154,10 +157,8 @@ function getDynamicCssFormUI() {
               name="button-text"
               placeholder="Enter button text"
             />
-          </div>
-
-          <!-- Padding, Border Radius & Placeholder Text -->
-          <div class="form-group">
+          </div>`,
+    padding: `<div class="form-group">
             <label for="padding">Padding (px)</label>
             <input
               type="number"
@@ -166,8 +167,8 @@ function getDynamicCssFormUI() {
               min="0"
               placeholder="e.g. 10"
             />
-          </div>
-          <div class="form-group">
+          </div>`,
+    borderRadius: `<div class="form-group">
             <label for="border-radius">Border Radius (px)</label>
             <input
               type="number"
@@ -176,8 +177,8 @@ function getDynamicCssFormUI() {
               min="0"
               placeholder="e.g. 5"
             />
-          </div>
-          <div class="form-group">
+          </div>`,
+    placeholderText: `<div class="form-group">
             <label for="placeholder-text">Placeholder Text</label>
             <input
               type="text"
@@ -185,9 +186,23 @@ function getDynamicCssFormUI() {
               name="placeholder-text"
               placeholder="Enter placeholder text"
             />
-          </div>
-          <button class="apply-css">Apply CSS</button>
-        </form>`;
+          </div>`,
+  };
+  const defaultOptions = `${formElements.padding} ${formElements.width} ${formElements.height} ${formElements.borderRadius}`;
+  const fontOptions = `${formElements.fontColor} ${formElements.fontSize}`;
+  const backgroundOptions = formElements.backgroundColor;
+  const btnOptions = `${defaultOptions} ${formElements.btnText} ${fontOptions} ${backgroundOptions}`;
+  const imgOptions = `${formElements.padding} ${formElements.width} ${formElements.img} ${backgroundOptions} ${formElements.borderRadius}`;
+  const formTextOptions = `${defaultOptions} ${formElements.placeholderText}  ${formElements.fontSize}`;
+  const textOptions = `${defaultOptions} ${fontOptions} ${backgroundOptions}`;
+  const sectionOptions = `${defaultOptions} ${backgroundOptions}`;
+  const formUI = `<form class="style-form">
+                      ${targetType === 'btn' ? btnOptions : ''}
+                      ${targetType === 'text' ? textOptions : ''}
+                      ${targetType === 'img' ? imgOptions : ''}
+                      ${targetType === 'form:text' ? formTextOptions : ''}
+                      ${targetType === 'section' ? sectionOptions : ''}
+                    </form>`;
 
   return window.getHTMLFromString(formUI);
 }
