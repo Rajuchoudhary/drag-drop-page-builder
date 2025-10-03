@@ -62,6 +62,7 @@ document.addEventListener('click', (event) => {
     console.log('delete');
 
     if (closesetTarget) {
+      window.removeDynamicStyles(closesetTarget);
       closesetTarget.remove();
     }
     if (targetType !== 'section') return;

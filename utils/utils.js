@@ -252,3 +252,27 @@ function initColorChangeTracking(formSelector) {
   });
 }
 window.initColorChangeTracking = initColorChangeTracking;
+
+function removeDynamicStyles(el) {
+  const styleTag = document.getElementById('stone-ui-dynamic-styles');
+  if (!styleTag) return;
+  let cssText = styleTag.textContent;
+  const dynamicClasses = Array.from(el.classList).filter((cls) =>
+    cls.startsWith('dynamic-')
+  );
+
+  el.querySelectorAll('[class]').forEach((child) => {
+    Array.from(child.classList).forEach((cls) => {
+      if (cls.startsWith('dynamic-') && !dynamicClasses.includes(cls)) {
+        dynamicClasses.push(cls);
+      }
+    });
+  });
+  if (!dynamicClasses.length) return;
+  dynamicClasses.forEach((cls) => {
+    const regex = new RegExp(`\\.${cls}\\s*\\{[^}]*\\}`, 'g');
+    cssText = cssText.replace(regex, '');
+  });
+  styleTag.textContent = cssText;
+}
+window.removeDynamicStyles = removeDynamicStyles;
