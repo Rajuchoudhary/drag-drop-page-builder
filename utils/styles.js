@@ -37,14 +37,45 @@ function livePreview(formSelector, targetEle, targetType) {
     const styles = getDynamicStyles(formSelector);
     console.log('stlye', styles);
     let cssContent = styleTag.textContent;
+    const cssSelector = `.${className}`;
+    const regex = new RegExp(`\\.${className}\\s*\\{([^}]*)\\}`, 'm');
+    let mergedRules = {};
+    const match = cssContent.match(regex);
+    if (match) {
+      match[1]
+        .split(';')
+        .map((s) => s.trim())
+        .filter(Boolean)
+        .forEach((rule) => {
+          const [prop, value] = rule.split(':').map((s) => s.trim());
+          mergedRules[prop] = value;
+        });
+    }
 
-    const cssRules = Object.entries(styles)
+    mergedRules = { ...mergedRules, ...styles };
+
+    const cssRules = Object.entries(mergedRules)
       .map(([prop, value]) => `${prop}: ${value};`)
       .join(' ');
-
-    cssContent = `\n${classSelector} {${cssRules}}`;
+    if (match) {
+      cssContent = cssContent.replace(regex, `${cssSelector} { ${cssRules} }`);
+    } else {
+      cssContent += `\n${classSelector} {${cssRules}}`;
+    }
 
     styleTag.textContent = cssContent;
+
+    if (targetType === 'btn' && e.target.name === 'button-text') {
+      targetEle.textContent = e.target.value;
+    }
+
+    if (targetType === 'form:text' && e.target.name === 'placeholder-text') {
+      targetEle.setAttribute('placeholder', e.target.value);
+    }
+
+    if (targetType === 'img' && e.target.name === 'img-url') {
+      targetEle.querySelector('img').setAttribute('src', e.target.value);
+    }
   });
 }
 window.livePreview = livePreview;
@@ -96,49 +127,59 @@ function loadExistingStyles(targetEle) {
   const cssContent = styleTag.textContent;
   const regex = new RegExp(`\\.${className}\\s*\\{([^}]*)\\}`, 'i');
   const match = cssContent.match(regex);
+  const styleMap = {};
   if (match && match[1]) {
     const cssRules = match[1]
       .split(';')
       .map((r) => r.trim())
       .filter(Boolean);
-    const styleMap = {};
     cssRules.forEach((rule) => {
       const [prop, value] = rule.split(':');
       styleMap[prop] = `${value}`.trim();
     });
     console.log('styleMap', styleMap);
-
-    const form = document.querySelector('.style-form');
-    if (form) {
-      if (form.querySelector('#font-size')) {
-        form.querySelector('#font-size').value = parseInt(
-          styleMap['font-size'] || ''
-        );
-      }
-      if (form.querySelector('#font-color')) {
-        form.querySelector('#font-color').value = styleMap['color'] || '';
-      }
-      if (form.querySelector('#width')) {
-        form.querySelector('#width').value = parseInt(styleMap['width'] || '');
-      }
-      if (form.querySelector('#height')) {
-        form.querySelector('#height').value = parseInt(
-          styleMap['height'] || ''
-        );
-      }
-      if (form.querySelector('#background-color')) {
-        form.querySelector('#background-color').value =
-          styleMap['background-color'] || '';
-      }
-      if (form.querySelector('#padding')) {
-        form.querySelector('#padding').value = parseInt(
-          styleMap['padding'] || ''
-        );
-      }
-      if (form.querySelector('#border-radius')) {
-        form.querySelector('#border-radius').value = parseInt(
-          styleMap['border-radius'] || ''
-        );
+  }
+  const form = document.querySelector('.style-form');
+  if (form) {
+    if (form.querySelector('#font-size')) {
+      form.querySelector('#font-size').value = parseInt(
+        styleMap['font-size'] || ''
+      );
+    }
+    if (form.querySelector('#font-color')) {
+      form.querySelector('#font-color').value = styleMap['color'] || '';
+    }
+    if (form.querySelector('#width')) {
+      form.querySelector('#width').value = parseInt(styleMap['width'] || '');
+    }
+    if (form.querySelector('#height')) {
+      form.querySelector('#height').value = parseInt(styleMap['height'] || '');
+    }
+    if (form.querySelector('#background-color')) {
+      form.querySelector('#background-color').value =
+        styleMap['background-color'] || '';
+    }
+    if (form.querySelector('#padding')) {
+      form.querySelector('#padding').value = parseInt(
+        styleMap['padding'] || ''
+      );
+    }
+    if (form.querySelector('#border-radius')) {
+      form.querySelector('#border-radius').value = parseInt(
+        styleMap['border-radius'] || ''
+      );
+    }
+    if (form.querySelector('#button-text')) {
+      form.querySelector('#button-text').value = targetEle.textContent || '';
+    }
+    if (form.querySelector('#placeholder-text')) {
+      form.querySelector('#placeholder-text').value =
+        targetEle.getAttribute('placeholder') || '';
+    }
+    if (form.querySelector('#img-url')) {
+      const imgEle = targetEle.querySelector('img');
+      if (imgEle) {
+        form.querySelector('#img-url').value = imgEle.getAttribute('src') || '';
       }
     }
   }
