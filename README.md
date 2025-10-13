@@ -5,7 +5,7 @@ This project is part of a tutorial series where we build a complete **page build
 
 ---
 
-## 🎥 YouTube Tutorial (Part 1)
+## 🎥 YouTube Tutorial Series
 
 Watch the full video tutorial here:
 
@@ -16,6 +16,7 @@ Watch the full video tutorial here:
 - 👉 [Part 5](https://youtu.be/hbCQo9bIugg)
 - 👉 [Part 6](https://youtu.be/525F_glvKNc)
 - 👉 [Part 7](https://youtu.be/E3Wi2Ac8wwo)
+- 👉 [Part 8](https://youtu.be/dQsl8qDJKD0)
 
 ---
 
