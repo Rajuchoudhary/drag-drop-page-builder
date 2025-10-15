@@ -17,6 +17,7 @@ Watch the full video tutorial here:
 - 👉 [Part 6](https://youtu.be/525F_glvKNc)
 - 👉 [Part 7](https://youtu.be/E3Wi2Ac8wwo)
 - 👉 [Part 8](https://youtu.be/dQsl8qDJKD0)
+- 👉 [Part 9](https://youtu.be/MewFeymqq-I)
 
 ---
 
