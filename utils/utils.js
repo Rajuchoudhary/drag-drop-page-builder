@@ -276,3 +276,38 @@ function removeDynamicStyles(el) {
   styleTag.textContent = cssText;
 }
 window.removeDynamicStyles = removeDynamicStyles;
+
+document.querySelector('.save-page')?.addEventListener('click', () => {
+  const mainEl = document.querySelector('.main');
+  if (!mainEl) {
+    return;
+  }
+
+  const styleEl = document.getElementById('stone-ui-dynamic-styles');
+
+  localStorage.setItem('builder-main', mainEl.outerHTML);
+  if (styleEl) {
+    localStorage.setItem('builder-style', styleEl.outerHTML);
+  }
+
+  const mainclone = mainEl.cloneNode(true);
+  mainclone
+    .querySelectorAll('.placeholder-section')
+    .forEach((el) => el.remove());
+
+  mainclone.querySelectorAll('[data-target-type]').forEach((wrapper) => {
+    const targetEl = wrapper.querySelector('[data-target]');
+    if (targetEl) {
+      targetEl.classList.remove('drop-section');
+      targetEl.removeAttribute('data-target');
+      targetEl.removeAttribute('contenteditable');
+      wrapper.replaceWith(targetEl);
+    } else {
+      wrapper.remove();
+    }
+  });
+
+  localStorage.setItem('live-main', mainclone.outerHTML);
+  localStorage.setItem('live-style', styleEl ? styleEl.outerHTML : '');
+  alert('Page saved successfully!');
+});

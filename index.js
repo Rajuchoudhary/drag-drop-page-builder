@@ -153,3 +153,29 @@ document.body.addEventListener('dragstart', (event) => {
   event.dataTransfer.setData('text/plain', cmpType);
 });
 document.body.addEventListener('dragend', (event) => {});
+
+document.addEventListener('DOMContentLoaded', () => {
+  const savedMain = localStorage.getItem('builder-main');
+  const savedStyle = localStorage.getItem('builder-style');
+
+  if (savedMain) {
+    const mainEl = document.querySelector('.main');
+    if (mainEl) {
+      mainEl.outerHTML = savedMain;
+    }
+  }
+
+  if (savedStyle) {
+    const styleEl = document.getElementById('stone-ui-dynamic-styles');
+    if (styleEl) {
+      const cssContent = savedStyle
+        .replace(/<style[^>]*>/i, '')
+        .replace(/<\/style>/i, '');
+      styleEl.outerHTML = cssContent;
+    } else {
+      document.head.insertAdjacentHTML('beforeend', savedStyle);
+    }
+  }
+
+  console.log('Builder restored from localstorage (main + style).');
+});
