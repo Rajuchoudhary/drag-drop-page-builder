@@ -5,5 +5,18 @@
     <title>Page Preview</title>
     <link rel="stylesheet" href="./styles/reset.css" />
   </head>
-  <body></body>
+  <body>
+    <script>
+      const liveMain = localStorage.getItem('live-main');
+      const liveStyle = localStorage.getItem('live-style');
+      console.log('alert...', liveMain, liveStyle);
+
+      if (liveMain && liveStyle) {
+        document.head.insertAdjacentHTML('beforeend', liveStyle);
+        document.body.innerHTML = liveMain;
+      } else {
+        document.body.innerHTML = '<p>No preview available.</p>';
+      }
+    </script>
+  </body>
 </html>
